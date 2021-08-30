@@ -92,11 +92,11 @@ Different parts of the project are labeled in the youtube video description alon
 
 Understanding Requirements
 
-    Our first task was to review the requirements and understand what our tasks will be. This was all new to us but reviewing the constraints and understanding the CM template helped us to make sense of what we are doing. After we completed our first couple issues our next task was to figure out how we would work.
+Our first task was to review the requirements and understand what our tasks will be. This was all new to us but reviewing the constraints and understanding the CM template helped us to make sense of what we are doing. After we completed our first couple issues our next task was to figure out how we would work.
 
-    Met daily for approximately 1-2 hours/day
+Met daily for approximately 1-2 hours/day
 
-    We decided to all meet for 1 to 2 hours a day to work on the project together. We attacked problems as a group each day during peer programming sessions. We tried different solutions and helped each other debug. This project is so new to us, we found it useful to bounce ideas off of each other.
+We decided to all meet for 1 to 2 hours a day to work on the project together. We attacked problems as a group each day during peer programming sessions. We tried different solutions and helped each other debug. This project is so new to us, we found it useful to bounce ideas off of each other.
 Provisioning
 
 We had no issues with provisioning our VM to host our jenkins server and build environment.
@@ -114,6 +114,6 @@ Miscellaneous Technologies/Issues
 
 Debugging (Virtualbox SSH timeout when healthy)
 
-    One frustration point for us was trying to ssh into our virtual machine after bakerx finished installing. Sometimes bakerx would finish before the virtual machine was ready to be set up. Then our next command to ssh into the machine would fail. This was less of a problem with our implementation and about the technologies we were using. Something that seemed to fix this problem was closing the browser tab which was routing to the IP address of the virtual machine. Remembering this step before running our script stayed in the back of our mind since this issue.
+One frustration point for us was trying to ssh into our virtual machine after bakerx finished installing. Sometimes bakerx would finish before the virtual machine was ready to be set up. Then our next command to ssh into the machine would fail. This was less of a problem with our implementation and about the technologies we were using. Something that seemed to fix this problem was closing the browser tab which was routing to the IP address of the virtual machine. Remembering this step before running our script stayed in the back of our mind since this issue.
 
 Screen Cast link: https://www.youtube.com/watch?v=sANQI_sA6U0
