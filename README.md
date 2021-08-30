@@ -1,6 +1,6 @@
 # Read Me
 Developed by:
-Sean Snively, Arno Dasgupta, Alex Chung
+[Sean Snively](https://github.com/seansnively), Arno Dasgupta, [Alex Chung](https://github.com/adchungcsc)
 
 For NCSU Undergraduate DevOps course instructed by Dr. Chris Parnin. Received verbal approval to upload this to public GitHub account.
 
