@@ -1,0 +1,38 @@
+- job:
+    name: checkbox.io
+    project-type: pipeline
+    dsl: |
+      node {
+          
+          stage('Source') {
+              env.APP_PORT = '3002'
+              env.MONGO_PORT= '27017'
+              env.MONGO_USER= 'arno'
+              env.MONGO_PASSWORD='pass'
+              env.MONGO_IP='localhost'
+              sh 'cd /var/lib/jenkins && mv analysis.js /var/lib/jenkins/workspace/'
+              git 'https://github.com/chrisparnin/checkbox.io'
+          }
+          stage('Build') {
+              dir('/var/lib/jenkins/workspace/checkbox.io/server-side/site') {
+                sh 'ls'
+                sh 'npm install esprima && npm install glob'
+                sh 'npm install'            
+              }
+              
+          }
+          stage('Analysis') {
+              dir ('/var/lib/jenkins/workspace'){
+                fileOperations([fileCopyOperation(excludes: '', flattenFiles: false, includes: '**/analysis.js', targetLocation: '/var/lib/jenkins/workspace/checkbox.io/server-side/site')])
+                sh 'cd checkbox.io/server-side/site && node analysis.js'
+              }
+              
+          }
+          stage('Test') {
+              dir('/var/lib/jenkins/workspace/checkbox.io/server-side/site') {
+                sh 'pm2 start server.js'
+                sh 'npm test'            
+              }
+          }
+          
+      }

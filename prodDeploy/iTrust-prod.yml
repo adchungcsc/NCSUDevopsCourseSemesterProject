@@ -1,0 +1,97 @@
+---
+- hosts: itrust
+  gather_facts: no
+
+  tasks:
+
+    - name: Install MySQL Server
+      become: yes
+      apt:
+        name: mysql-server
+        state: latest
+        update_cache: yes
+
+    - name: Install MySQL client
+      become: yes
+      apt:
+        name: mysql-client
+        state: latest
+        update_cache: yes
+
+    - name: Install pip3
+      become: yes
+      apt: name=python3-pip state=present
+
+    - name: Install PyMySQL
+      become: yes
+      pip:
+        name: PyMySQL
+
+    # WARNING: ONLY RUN THIS ONCE PER VM SETUP
+    - name: "Mysql Configuration - Resetting Root Password"
+      become: yes
+      mysql_user:
+        login_user: root
+        login_password: ''
+        name: root
+        host_all: yes
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        password: 'admin'
+        state: present
+
+    - name: Install JDK
+      become: yes
+      apt:
+        name: default-jdk
+        state: latest
+        update_cache: yes
+
+    - name: Create tomcat folder
+      file:
+        path: "/home/{{ ansible_user }}/tomcat"
+        state: directory
+
+    - name: Download Tomcat
+      get_url: url="https://mirror.olnevhost.net/pub/apache/tomcat/tomcat-9/v9.0.45/bin/apache-tomcat-9.0.45.tar.gz" dest="/home/{{ ansible_user }}/tomcat"
+
+    - name: Unarchive tomcat tarball
+      ansible.builtin.unarchive:
+        src: "/home/{{ ansible_user }}/tomcat/apache-tomcat-9.0.45.tar.gz"
+        dest: "/home/{{ ansible_user }}/tomcat"
+        owner: "{{ ansible_user }}"
+        remote_src: yes
+
+    - name: Copy war file from configuration server to production server
+      become: yes
+      ansible.builtin.copy:
+        src: /tmp/iTrustBuild/iTrust2.war
+        dest: "/home/{{ ansible_user }}/tomcat/apache-tomcat-9.0.45/webapps"
+        owner: "{{ ansible_user }}"
+
+    - name: Copy tomcat service file from configuration server to production server
+      become: yes
+      ansible.builtin.copy:
+        src: /home/vagrant/prodDeploy/tomcat.service
+        dest: /etc/systemd/system/
+        owner: "{{ ansible_user }}"
+
+    - name: Create /etc/systemd/system if not already present
+      become: yes
+      ansible.builtin.file:
+        path: /etc/systemd/system/
+        state: directory
+
+    - name: Modify tomcat service file to use a specific user
+      become: yes
+      replace:
+        path: /etc/systemd/system/tomcat.service
+        regexp: --VM_USER--
+        replace: "{{ ansible_user }}"
+
+    - name: Restart tomcat
+      become: yes
+      ansible.builtin.service:
+        name: tomcat
+        state: restarted
+
+    

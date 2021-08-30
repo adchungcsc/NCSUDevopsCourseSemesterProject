@@ -1,0 +1,102 @@
+Overall mutation coverage: 39/1000 (3%) mutations caught by the test suite.
+Useful tests 
+ ============ 
+8/1000 testOfficeVisitAPI 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+	 - /home/vagrant/fuzzing/fuzzed/2 
+	 - /home/vagrant/fuzzing/fuzzed/3 
+	 - /home/vagrant/fuzzing/fuzzed/4 
+	 - /home/vagrant/fuzzing/fuzzed/5 
+	 - /home/vagrant/fuzzing/fuzzed/6 
+	 - /home/vagrant/fuzzing/fuzzed/7 
+6/1000 testPatientAsPatient 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+	 - /home/vagrant/fuzzing/fuzzed/2 
+	 - /home/vagrant/fuzzing/fuzzed/3 
+	 - /home/vagrant/fuzzing/fuzzed/4 
+	 - /home/vagrant/fuzzing/fuzzed/5 
+6/1000 testCodeAPI 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+	 - /home/vagrant/fuzzing/fuzzed/2 
+	 - /home/vagrant/fuzzing/fuzzed/3 
+	 - /home/vagrant/fuzzing/fuzzed/4 
+	 - /home/vagrant/fuzzing/fuzzed/5 
+6/1000 testAppointmentRequestAPI 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+	 - /home/vagrant/fuzzing/fuzzed/2 
+	 - /home/vagrant/fuzzing/fuzzed/3 
+	 - /home/vagrant/fuzzing/fuzzed/4 
+	 - /home/vagrant/fuzzing/fuzzed/5 
+6/1000 testInvalidCodes 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+	 - /home/vagrant/fuzzing/fuzzed/2 
+	 - /home/vagrant/fuzzing/fuzzed/3 
+	 - /home/vagrant/fuzzing/fuzzed/4 
+	 - /home/vagrant/fuzzing/fuzzed/5 
+5/1000 testPatientAPI 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+	 - /home/vagrant/fuzzing/fuzzed/2 
+	 - /home/vagrant/fuzzing/fuzzed/3 
+	 - /home/vagrant/fuzzing/fuzzed/4 
+4/1000 testGetNonExistentAppointment 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+	 - /home/vagrant/fuzzing/fuzzed/2 
+	 - /home/vagrant/fuzzing/fuzzed/3 
+3/1000 testGetNonExistentPatient 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+	 - /home/vagrant/fuzzing/fuzzed/2 
+3/1000 testPreScheduledOfficeVisit 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+	 - /home/vagrant/fuzzing/fuzzed/2 
+3/1000 testUpdateUsers 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+	 - /home/vagrant/fuzzing/fuzzed/2 
+3/1000 testPersonnelAPI 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+	 - /home/vagrant/fuzzing/fuzzed/2 
+3/1000 testHospitalAPI 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+	 - /home/vagrant/fuzzing/fuzzed/2 
+2/1000 testDrugAPI 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+2/1000 testGetNonExistentHospital 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+	 - /home/vagrant/fuzzing/fuzzed/1 
+1/1000 testRoleFiltering 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+1/1000 testGetByRole 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+1/1000 testCreateUsers 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+1/1000 testGetNonExistentPersonnel 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+1/1000 testCreateBadAppointmentRequest 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+1/1000 testPatientUnauthenticated 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+1/1000 testPermissions 
+	 - /home/vagrant/fuzzing/fuzzed/0 
+0/1000 testIllegalRoleCombinations 
+0/1000 testCreateInvalidUsers 
+0/1000 testDeleteNonExistentAppointment 
+0/1000 testGetNonExistentOfficeVisit 
+0/1000 testCreatePatientRecord 
+0/1000 testCreateLogEntries 
+0/1000 testPersonnel 
+0/1000 testOfficeVisit 
+0/1000 testCodes 
+0/1000 testDiagnoses 
+0/1000 testUserRoles 

@@ -1,0 +1,99 @@
+- job:
+    name: iTrust
+    project-type: pipeline
+    dsl: |
+      node {
+        def build_ok = true
+          try {
+            stage('Source') {
+                echo 'Cloning iTrust'            
+                git credentialsId: 'NCSU_GitHub', branch: 'main', url: 'https://github.ncsu.edu/engr-csc326-staff/iTrust2-v8.git'
+            }
+            stage('Build') {
+                echo 'Build: Setting up iTrust'
+                sh '''
+                #!/bin/bash
+                cd iTrust2/src/main/resources
+                mv application.yml.template application.yml
+                sed -i \'s/password:/password: admin/g\' application.yml
+                cat application.yml
+                '''
+            }
+            stage('Test') {
+              echo 'Testing iTrust'
+              dir ('/var/lib/jenkins/workspace/iTrust/iTrust2') {
+                sh 'ls'
+                sh 'mvn clean test integration-test checkstyle:checkstyle'
+                //sh 'mvn clean test'
+              }
+            }
+            stage('Analysis') {
+                //This is supposed to fail.. remove if you want doesn't matter
+                //sh 'echo "Fail!"; exit 1'
+                echo 'Checking Coverage and Checkstyle'
+                dir ('/var/lib/jenkins/workspace/iTrust/iTrust2') {
+                    recordIssues(
+                      tools: [checkStyle(reportEncoding: 'UTF-8')], unstableTotalHigh: 5, failedTotalHigh: 15
+                    )
+                    jacoco(
+                      minimumInstructionCoverage: "50",
+                      minimumLineCoverage: "50",
+                      minimumMethodCoverage: "60",
+                      maximumInstructionCoverage: "65",
+                      maximumLineCoverage: "60",
+                      maximumMethodCoverage: "65",
+                      changeBuildStatus: true
+                    )
+                    
+                    if ( currentBuild.result == "FAILURE") {
+                      sh 'echo "Coverage Goals not met."; exit 1'
+
+                    }
+                }
+            }
+          } catch (e) {
+            echo 'Error:'
+            echo e.toString()
+            build_ok = false
+          }
+        stage('Clean up') {
+            echo 'Entered Clean up Stage'
+            //killall google-chrome-stable
+            try {
+              sh 'killall chrome'
+            } catch (e) {
+              echo 'No chrome instances were left'
+            }
+            sh 'mysql -u root --password="admin" -e \'DROP DATABASE IF EXISTS iTrust2_test\''
+            try {
+              sh'''
+              #!/bin/bash
+              lsof -i tcp:9001 | grep jetty | awk '{print $2}' | xargs kill
+              '''
+            } catch (e) {
+              echo 'No stray jetty processes.'
+              echo e.toString()
+              
+            }
+            
+        }
+      stage('Export .war file for deployment.'){
+            //create war file (used later for depl)
+            dir ('/var/lib/jenkins/workspace/iTrust/iTrust2') {
+              sh 'ls'
+              sh 'mvn package'
+              sh 'mkdir -p /tmp/iTrustBuild'
+              //copy the generated web archive to folder.
+              sh 'cp -r /var/lib/jenkins/workspace/iTrust/iTrust2/target/*.war /tmp/iTrustBuild/iTrust2.war'
+            }
+      }
+
+        //Sets the build status to success or failure.
+        if(build_ok) {
+            currentBuild.result = "SUCCESS"
+        } else {
+            currentBuild.result = "FAILURE"
+        }
+
+      }
+    

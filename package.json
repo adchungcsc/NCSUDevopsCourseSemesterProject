@@ -1,0 +1,28 @@
+{
+  "name": "pipeline",
+  "version": "1.0.0",
+  "description": "Pipeline project",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {},
+  "author": "YOU",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/compute": "^2.4.3",
+    "bluebird": "^3.7.2",
+    "chalk": "^4.1.0",
+    "fetch": "^1.1.0",
+    "form-data": "^2.3.3",
+    "googleapis": "^71.0.0",
+    "ini": "^2.0.0",
+    "jenkins": "^0.28.1",
+    "move-file": "^2.0.0",
+    "node-fetch": "^2.6.1",
+    "random-js": "^2.1.0",
+    "randomstring": "^1.1.5",
+    "replace-in-file": "^6.2.0",
+    "request": "^2.88.2",
+    "xml2js": "^0.4.23",
+    "yargs": "^15.4.1"
+  }
+}

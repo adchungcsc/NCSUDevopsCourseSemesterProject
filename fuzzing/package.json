@@ -1,0 +1,26 @@
+{
+  "name": "fuzzing",
+  "version": "1.0.0",
+  "description": "fuzzy",
+  "main": "fuzzing.js",
+  "scripts": {
+    "cat": "echo \"龴ↀ◡ↀ龴 meow\""
+  },
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "chalk": "^4.1.0",
+    "fetch": "^1.1.0",
+    "form-data": "^2.3.3",
+    "jenkins": "^0.28.1",
+    "move-file": "^2.0.0",
+    "node-fetch": "^2.6.1",
+    "random-js": "^2.1.0",
+    "replace-in-file": "^6.2.0",
+    "request": "^2.88.2",
+    "xml2js": "^0.4.23",
+    "yargs": "^15.4.1",
+    "randomstring": "^1.1.5"
+  },
+  "author": "",
+  "license": "ISC"
+}

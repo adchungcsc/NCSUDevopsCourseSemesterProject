@@ -1,0 +1,185 @@
+---
+# see the best practices in ansible docs for how to get started with creating roles etc.:
+# https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html
+
+- hosts: checkbox
+  remote_user: admin
+  gather_facts: no
+
+  tasks:
+
+    - name: Set an APP_PORT variable
+      become: yes
+      lineinfile:
+        path: /etc/environment
+        insertafter: EOF
+        line: 'APP_PORT=3002'
+        
+    - name: Set an MONGO_PORT variable
+      become: yes
+      lineinfile:
+        path: /etc/environment
+        insertafter: EOF
+        line: 'MONGO_PORT=27017'
+
+    - name: Set an MONGO_USER variable
+      become: yes
+      lineinfile:
+        path: /etc/environment
+        insertafter: EOF
+        line: 'MONGO_USER=arno'
+
+    - name: Set an MONGO_PASSWORD variable  
+      become: yes
+      lineinfile:
+        path: /etc/environment
+        insertafter: EOF
+        line: 'MONGO_PASSWORD=pass'
+    
+    - name: Set an MONGO_IP variable  
+      become: yes
+      lineinfile:
+        path: /etc/environment
+        insertafter: EOF
+        line: 'MONGO_IP=localhost'   
+
+    - name: apt-get update
+      become: yes
+      shell: apt-get update
+
+    - name: Install Git
+      become: yes
+      apt:
+        name: git
+        state: latest
+        update_cache: yes
+
+    - name: Clone checkbox.io
+      git:
+        clone: yes
+        repo: 'https://github.com/chrisparnin/checkbox.io.git'
+        dest: '/home/{{ ansible_user }}/checkbox.io'
+
+    - name: Install Python3 pip
+      become: yes
+      apt:
+        name: python3-pip
+        state: latest
+        update_cache: yes
+
+    - name: Install pymongo with pip3
+      become: yes
+      shell: pip3 install pymongo
+
+    - name: Get mongodb public key
+      become: yes
+      shell: wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+
+    - name: Create list for mongo db
+      become: yes
+      shell: echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+
+    - name: reload aptget
+      become: yes
+      shell: sudo apt-get update
+    
+    - name: install mongodb
+      become: yes
+      shell: sudo apt-get install -y mongodb-org
+
+    - name: Restart mongodb
+      become: yes
+      service:
+        name: mongod
+        state: restarted
+
+    # - name: Install MongoDB
+    #   become: yes
+    #   apt:
+    #     name: mongodb
+    #     state: latest
+    #     update_cache: yes
+
+    - name: Curl for debian for Nodejs version 16
+      shell: curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+      args:
+        chdir: '/home/{{ ansible_user }}/'
+
+    - name: Install Nodejs
+      become: yes
+      apt:
+        name: nodejs
+        state: latest
+        update_cache: yes
+
+    - name: Install pm2
+      become: yes
+      npm:
+        name: pm2
+        global: yes
+
+    - name: Set up MongoDB User
+      mongodb_user:
+        database: admin
+        name: arno
+        password: pass
+        state: present
+        roles: readWrite
+    
+    - name: Restart mongodb
+      become: yes
+      service:
+        name: mongod
+        state: restarted
+        
+    - name: Npm install in checkbox io directory
+      shell: npm install
+      args:
+        chdir: '/home/{{ ansible_user }}/checkbox.io/server-side/site'
+
+    - name: Install Nginx
+      become: yes
+      apt:
+        name: nginx
+        state: latest
+        update_cache: yes
+
+    - name: Replace localhost ip with server ip in nginx.conf
+      replace:
+        path: '/home/{{ ansible_user }}/checkbox.io/local-conf/nginx.conf'
+        regexp: '127.0.0.1'
+        replace: '{{ ansible_host }}'
+
+    - name: Replace root file path for nginx default
+      replace:
+        path: '/home/{{ ansible_user }}/checkbox.io/local-conf/default'
+        regexp: '/Users/gameweld/bitbucket/checkbox.io/checkbox.io/public_html/'
+        replace: '/home/{{ ansible_user }}/checkbox.io/public_html/'
+
+    - name: Replace port 80 to 3002 nginx default
+      replace:
+        path: '/home/{{ ansible_user }}/checkbox.io/local-conf/default'
+        regexp: '80'
+        replace: '3002'
+
+    - name: Move checkbox nginx.conf to /etc/nginx
+      become: yes
+      command: cp '/home/{{ ansible_user }}/checkbox.io/local-conf/nginx.conf' /etc/nginx
+
+    - name: Move checkbox default to /etc/nginx/sites-enabled
+      become: yes
+      command: cp "/home/{{ ansible_user }}/checkbox.io/local-conf/default" /etc/nginx/sites-enabled
+    
+    - name: Restart nginx
+      become: yes
+      service:
+        name: nginx
+        state: restarted
+
+    - name: Start checkbox server in checkbox io directory
+      shell: pm2 start server.js
+      args:
+        chdir: '/home/{{ ansible_user }}/checkbox.io/server-side/site'
+
+        
+    

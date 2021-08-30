@@ -1,0 +1,206 @@
+---
+# see the best practices in ansible docs for how to get started with creating roles etc.:
+# https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html
+
+- hosts: localhost
+  connection: local
+  remote_user: admin
+  gather_facts: no
+
+  tasks:
+
+    - name: Wait for Jenkins to start up
+      ansible.builtin.uri:
+        url: "http://127.0.0.1:9000/login"
+        status_code: 200
+        timeout: 5
+      register: jenkins_service_status
+      # Keep trying for 5 mins in 5 sec intervals
+      retries: 60
+      delay: 5
+      until: >
+         'status' in jenkins_service_status and
+         jenkins_service_status['status'] == 200
+
+    - name: Install MongoDB
+      become: yes
+      apt:
+        name: mongodb
+        state: latest
+        update_cache: yes
+
+    - name: Install Nodejs
+      become: yes
+      apt:
+        name: nodejs
+        state: latest
+        update_cache: yes
+
+    - name: Install Maven
+      become: yes
+      apt:
+        name: maven
+        state: latest
+        update_cache: yes
+      
+    - name: Install npm
+      become: yes
+      apt:
+        name: npm
+        state: latest
+        update_cache: yes
+
+    - name: Install pm2
+      become: yes
+      npm:
+        name: pm2
+        global: yes
+
+    - name: Install MySQL Server
+      become: yes
+      apt:
+        name: mysql-server
+        state: latest
+        update_cache: yes
+    
+    - name: Install MySQL client
+      become: yes
+      apt:
+        name: mysql-client
+        state: latest
+        update_cache: yes
+
+    - name: Install PyMySQL
+      become: yes
+      pip:
+        name: PyMySQL
+    
+    - name: "Mysql Configuration - Resetting Root Password"
+      become: yes
+      mysql_user:
+        login_user: root
+        login_password: ''
+        name: root
+        host_all: yes
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        password: 'admin'
+        state: present
+
+    - name: Set up MongoDB User
+      mongodb_user:
+        database: admin
+        name: arno
+        password: pass
+        state: present
+        roles: readWrite
+      notify:
+        - Restart mongodb
+
+    - name: Install plugin - Pipeline stage view
+      become: yes
+      jenkins_plugin:
+        name: "pipeline-stage-view"
+        url_username: admin
+        url_password: admin
+        url: "http://127.0.0.1:9000/"
+        validate_certs: yes
+        with_dependencies: yes
+
+    - name: Install plugin - Git
+      become: yes
+      jenkins_plugin:
+        name: "git"
+        url_username: admin
+        url_password: admin
+        url: "http://127.0.0.1:9000/"
+        validate_certs: yes
+        with_dependencies: yes
+
+    - name: Install plugin - workflow aggregator (Pipeline)
+      become: yes
+      jenkins_plugin:
+        name: "workflow-aggregator"
+        url_username: admin
+        url_password: admin
+        url: "http://localhost:9000/"
+        validate_certs: yes
+        with_dependencies: yes
+
+    - name: Install plugin - Credentials
+      become: yes
+      jenkins_plugin:
+        name: "credentials"
+        url_username: admin
+        url_password: admin
+        url: "http://localhost:9000/"
+        validate_certs: yes
+        with_dependencies: yes
+    
+    - name: Install plugin - JaCoCo
+      become: yes
+      jenkins_plugin:
+        name: "jacoco"
+        url_username: admin
+        url_password: admin
+        url: "http://localhost:9000/"
+        validate_certs: yes
+        with_dependencies: yes
+
+    - name: Install plugin - warnings-ng
+      become: yes
+      jenkins_plugin:
+        name: "warnings-ng"
+        url_username: admin
+        url_password: admin
+        url: "http://localhost:9000/"
+        validate_certs: yes
+        with_dependencies: yes
+
+    - name: Install plugin - File Operations
+      become: yes
+      jenkins_plugin:
+        name: "file-operations"
+        url_username: admin
+        url_password: admin
+        url: "http://localhost:9000/"
+        validate_certs: yes
+        with_dependencies: yes
+
+    - name: Install plugin - Workspace Cleanup
+      become: yes
+      jenkins_plugin:
+        name: "ws-cleanup"
+        url_username: admin
+        url_password: admin
+        url: "http://127.0.0.1:9000/"
+        validate_certs: yes
+        with_dependencies: yes
+
+    - name: Restart jenkins
+      become: yes
+      service:
+        name: jenkins
+        state: restarted
+        
+    - name: Wait for Jenkins to start up
+      ansible.builtin.uri:
+        url: "http://127.0.0.1:9000/login"
+        status_code: 200
+        timeout: 5
+      register: jenkins_service_status
+      # Keep trying for 5 mins in 5 sec intervals
+      retries: 60
+      delay: 5
+      until: >
+         'status' in jenkins_service_status and
+         jenkins_service_status['status'] == 200
+
+
+  handlers:
+    - name: Restart mongodb
+      become: yes
+      service:
+        name: mongodb
+        state: restarted
+
+    

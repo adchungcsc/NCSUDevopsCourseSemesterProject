@@ -1,0 +1,23 @@
+- hosts: localhost
+  connection: local
+  remote_user: admin
+  gather_facts: no
+
+  tasks:
+    - uri:
+        url: 'http://127.0.0.1:9000/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
+        user: admin
+        password: admin
+        force_basic_auth: yes
+        return_content: yes
+      register: crumb
+
+    - name: print crumb
+      debug: 
+      msg: "the crumb is {{crumb}}"
+
+    - name: Creating a file with content
+      copy:
+      dest: "~/crumbTest.txt"
+      content: |
+        {{crumb}}
