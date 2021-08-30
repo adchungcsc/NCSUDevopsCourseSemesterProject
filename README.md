@@ -8,7 +8,11 @@ This project was developed throughout the duration of a semseter in three milest
 
 [Final Demo](https://youtu.be/G8uOZHFInpc)
 
-https://youtu.be/G8uOZHFInpc
+[Milestone 3](https://youtu.be/YCCO6PwoYaM)
+
+[Milestone 2](https://www.youtube.com/watch?v=ljvxSZa7DAU)
+
+[Milestone 1](https://www.youtube.com/watch?v=sANQI_sA6U0)
 
 ## Features (including but not limited to)
 
