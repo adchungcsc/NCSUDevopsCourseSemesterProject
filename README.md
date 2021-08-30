@@ -6,6 +6,9 @@ For NCSU Undergraduate DevOps course instructed by Dr. Chris Parnin. Received ve
 
 This project was developed throughout the duration of a semseter in three milestones. It demonstrates components of a functional pipeline.
 
+[Final Demo](https://youtu.be/G8uOZHFInpc)
+https://youtu.be/G8uOZHFInpc
+
 ## Features (including but not limited to)
 
 - Automated Jenkins server setup (provision & configuration management & initial setup on a virtualbox instance)
