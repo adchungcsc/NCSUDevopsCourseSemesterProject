@@ -6,18 +6,21 @@ For NCSU Undergraduate DevOps course instructed by [Dr. Chris Parnin](http://www
 
 This project was developed throughout the duration of a semseter in three milestones. It demonstrates components of a functional pipeline.
 
+### Project Milestone Demos
+
 [Final Demo](https://youtu.be/G8uOZHFInpc)
 
 [Milestone 3](https://youtu.be/YCCO6PwoYaM)
 
-[Milestone 3 Requirements](https://github.com/CSC-DevOps/Course/blob/master/Project/Pipeline3.md)
-
 [Milestone 2](https://www.youtube.com/watch?v=ljvxSZa7DAU)
 
-[Milestone 2 Requirements](https://github.com/CSC-DevOps/Course/blob/master/Project/Pipeline2.md)
-
-
 [Milestone 1](https://www.youtube.com/watch?v=sANQI_sA6U0)
+
+### Project Milestone Requirements
+
+[Milestone 3 Requirements](https://github.com/CSC-DevOps/Course/blob/master/Project/Pieline3.md)
+
+[Milestone 2 Requirements](https://github.com/CSC-DevOps/Course/blob/master/Project/Pipeline2.md)
 
 [Milestone 1 Requirements](https://github.com/CSC-DevOps/Course/blob/master/Project/Pipeline1.md)
 
@@ -26,7 +29,7 @@ High Level Architecture
 
 ![architecture](https://user-images.githubusercontent.com/45158195/131715882-03406253-552a-42b9-b5a2-313a511f7f14.png)
 
-Followed the "automate everything" philosophy to have Jenkins pipeline setup automated on a virtualbox VM running locally on any given device. After the Jenkins server is provisioned and configured, it is ready for usage. Target virtualbox instances running locally for iTrust2 and checkbox.io must be provisioned and setup with an ansible inventory file that can be passed to the pipeline deploy. This same command for deploying loclaly can also be used to deliver to prod environment provided a valid inventory file is provided (one is generated during the automated GCP instance provisioning step)
+Followed the "automate everything" philosophy to have Jenkins pipeline setup automated on a virtualbox VM running locally on any given device. After the Jenkins server is provisioned and configured, it is ready for usage. Target virtualbox instances running locally for iTrust2 and checkbox.io must be provisioned and setup with an ansible inventory file that can be passed to the pipeline deploy. This same command for deploying locally can also be used to deliver to prod environment provided a valid inventory file is provided (one is generated during the automated GCP instance provisioning step)
 
 ## Features (including but not limited to)
 
