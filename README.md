@@ -29,7 +29,7 @@ High Level Architecture
 
 ![architecture](https://user-images.githubusercontent.com/45158195/131715882-03406253-552a-42b9-b5a2-313a511f7f14.png)
 
-Followed the "automate everything" philosophy to have Jenkins pipeline setup automated on a virtualbox VM running locally on any given device. After the Jenkins server is provisioned and configured, it is ready for usage. Target virtualbox instances running locally for iTrust2 and checkbox.io must be provisioned and setup with an ansible inventory file that can be passed to the pipeline deploy. This same command for deploying locally can also be used to deliver to prod environment provided a valid inventory file is provided (one is generated during the automated GCP instance provisioning step)
+Followed the "automate everything" philosophy to have Jenkins pipeline setup automated on a virtualbox VM running locally on any given device. After the Jenkins server is provisioned and configured, it is ready for usage. Target virtualbox instances running locally for iTrust2 and checkbox.io must be provisioned and setup with an ansible inventory file that can be passed to the pipeline deploy. This same command for deploying locally can also be used to deliver to prod environment provided a valid inventory file is provided (one is generated during the automated GCP instance provisioning step). There is also canary analysis on checkbox.io using an agent that sends metrics to a redis message queue where it is monitored on a monitoring vm. 
 
 ## Features (including but not limited to)
 
