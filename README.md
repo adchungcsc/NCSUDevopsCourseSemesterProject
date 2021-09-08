@@ -18,7 +18,7 @@ This project was developed throughout the duration of a semseter in three milest
 
 ### Project Milestone Requirements
 
-[Milestone 3 Requirements](https://github.com/CSC-DevOps/Course/blob/master/Project/Pieline3.md)
+[Milestone 3 Requirements](https://github.com/CSC-DevOps/Course/blob/master/Project/Pipeline3.md)
 
 [Milestone 2 Requirements](https://github.com/CSC-DevOps/Course/blob/master/Project/Pipeline2.md)
 
