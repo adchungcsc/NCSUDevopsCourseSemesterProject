@@ -8,7 +8,7 @@ This project was developed throughout the duration of a semseter in three milest
 
 ### Project Milestone Demos
 
-[Final Demo](https://youtu.be/G8uOZHFInpc)
+[Final Concise Demo](https://youtu.be/G8uOZHFInpc)
 
 [Milestone 3](https://youtu.be/YCCO6PwoYaM)
 
